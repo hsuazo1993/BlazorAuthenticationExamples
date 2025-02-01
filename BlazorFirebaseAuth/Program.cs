@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(options =>
     options.ClientId = builder.Configuration.GetValue<string>("Firebase:AuthConfig:GoogleClientId")!;
     options.ClientSecret = builder.Configuration.GetValue<string>("Firebase:AuthConfig:GoogleClientSecret")!;
     options.CallbackPath = new PathString("/google-signin-success");
-    options.SaveTokens = true; // Enable saving tokens
+    options.SaveTokens = true;
 
     options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
 
@@ -59,6 +59,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IAuthService, FirebaseAuthService>();
 builder.Services.AddHttpContextAccessor();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,5 +73,6 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
 
 app.Run();

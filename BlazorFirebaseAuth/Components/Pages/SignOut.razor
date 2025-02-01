@@ -2,22 +2,40 @@
 
 @rendermode InteractiveServer
 
+@using BlazorFirebaseAuth.Auth
 @using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inject IHttpContextAccessor _httpContextAccessor;
 @inject NavigationManager _navigation;
+@inject IJSRuntime _javascript;
+
+@attribute [Authorize]
 
 
 @code {
 	protected override async Task OnInitializedAsync()
 	{
-		if (_httpContextAccessor.HttpContext != null)
+		try
 		{
-			await _httpContextAccessor.HttpContext.SignOutAsync();
-			_httpContextAccessor.HttpContext.Response.Cookies.Delete(".AspNetCore.AuthCookie");
+			await _httpContextAccessor.HttpContext!.SignOutAsync();
+			_httpContextAccessor.HttpContext!.Response.Cookies.Delete(".AspNetCore.AuthCookie");
+		}
+		catch (Exception)
+		{
+		}
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await _javascript.InvokeVoidAsync("location.reload");
 		}
 
-		_navigation.NavigateTo("/");
+		_navigation.NavigateTo("/", forceLoad: true);
+
+		return;
 	}
 }
