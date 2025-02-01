@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/BlazorFirebaseAuth/.vs/BlazorFirebaseAuth
+/BlazorFirebaseAuth/bin/Debug/net8.0
+/BlazorFirebaseAuth/obj
