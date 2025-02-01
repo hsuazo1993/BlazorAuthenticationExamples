@@ -1,0 +1,44 @@
+﻿@rendermode InteractiveServer
+@page "/signin"
+
+@using BlazorFirebaseAuth.Auth;
+@using Microsoft.AspNetCore.Authentication;
+@using Microsoft.AspNetCore.Authentication.Google;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+@using Microsoft.JSInterop;
+
+@inject IAuthService _authService;
+@inject NavigationManager Navigation;
+@inject AuthenticationStateProvider LovenoteAuthProvider;
+@inject IHttpContextAccessor HttpContextAccessor;
+@inject IJSRuntime JSRuntime;
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="text-center">Sign In</h3>
+				</div>
+				<div class="card-body">
+					<hr />
+
+					<div class="d-grid gap-2">
+						<button type="button" class="btn btn-outline-danger" @onclick="HandleGoogleSignIn">
+							<i class="fab fa-google me-2"></i> Sign in with Google
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@code {
+	private void HandleGoogleSignIn()
+	{
+		// Redirect to the dedicated challenge component
+		Navigation.NavigateTo("/google-signin-challenge", forceLoad: true);
+	}
+}

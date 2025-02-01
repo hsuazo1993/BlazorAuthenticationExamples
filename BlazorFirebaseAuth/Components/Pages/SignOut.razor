@@ -1,0 +1,23 @@
+﻿@page "/signout"
+
+@rendermode InteractiveServer
+
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject IHttpContextAccessor _httpContextAccessor;
+@inject NavigationManager _navigation;
+
+
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		if (_httpContextAccessor.HttpContext != null)
+		{
+			await _httpContextAccessor.HttpContext.SignOutAsync();
+			_httpContextAccessor.HttpContext.Response.Cookies.Delete(".AspNetCore.AuthCookie");
+		}
+
+		_navigation.NavigateTo("/");
+	}
+}

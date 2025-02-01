@@ -1,0 +1,24 @@
+﻿@page "/google-signin-challenge"
+
+@using Microsoft.AspNetCore.Authentication;
+@using Microsoft.AspNetCore.Authentication.Google;
+
+@inject IHttpContextAccessor _httpContextAccessor;
+@inject NavigationManager _navigation;
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var httpContext = _httpContextAccessor.HttpContext;
+        if (httpContext == null)
+        {
+            // Handle error: Cannot get HttpContext
+            _navigation.NavigateTo("/signin?error=nohttpcontext", true);
+            return;
+        }
+
+        await httpContext.ChallengeAsync(
+            GoogleDefaults.AuthenticationScheme,
+            new AuthenticationProperties { RedirectUri = "/" });
+    }
+}
