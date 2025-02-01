@@ -6,4 +6,4 @@
 /BlazorFirebaseAuth/.vs/BlazorFirebaseAuth
 /BlazorFirebaseAuth/bin/Debug/net8.0
 /BlazorFirebaseAuth/obj
-*.json
+appsettings.Development.json
